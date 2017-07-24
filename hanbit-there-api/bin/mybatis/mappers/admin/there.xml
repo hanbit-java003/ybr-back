@@ -7,29 +7,30 @@
 	<select id="selectThereGroups" resultType="adminThereGroupVO">
 		SELECT g.id, g.name, g.update_dt, COUNT(t.group_id) there_count
 		  FROM tbl_there_group g LEFT JOIN tbl_there t
-		 ON g.id = t.group_id
+		 	ON g.id = t.group_id
 		 GROUP BY t.group_id
 		 ORDER BY group_order
 	</select>
 	
 	<update id="updateThereGroupOrder" parameterType="map">
 		UPDATE tbl_there_group
-		SET group_order = group_order + (${order}),
-			update_dt = NOW()
-		WHERE id = #{id}
+		   SET group_order = group_order + (${order}),
+		   	   update_dt = NOW()
+		 WHERE id = #{id}
 	</update>
 	
-	<select id="selectThereGroup" parameterType="string" resultType="adminThereGroupVO">
-	SELECT id, name
-	FROM tbl_there_group
-	WHERE id = #{id}
+	<select id="selectThereGroup" parameterType="string"
+		resultType="adminThereGroupVO">
+		SELECT id, name
+		  FROM tbl_there_group
+		 WHERE id = #{id}
 	</select>
 	
-	<update id="updateThereGroup" parameterType="adminThereGroup">
+	<update id="updateThereGroup" parameterType="adminThereGroupVO">
 		UPDATE tbl_there_group
-			SET name = #{name},
-			update_dt = NOW()
-			WHERE id = #{id}
+		   SET name = #{name},
+		   	   update_dt = NOW()
+		 WHERE id = #{id}	
 	</update>
 	
 	<delete id="deleteThereGroup" parameterType="string">
@@ -40,18 +41,16 @@
 	
 	<insert id="insertThereGroup" parameterType="adminThereGroupVO">
 		INSERT INTO tbl_there_group
-				(id, name, group_order, update_dt)
-			VALUES
-				(#{id}, #{name}, (
-				SELECT MAX(group_order) + 1
-				FROM tbl_there_group
-				), NOW())
+			(id, name, group_order, update_dt)
+		SELECT #{id}, #{name}, MAX(group_order) + 1, NOW()
+		  FROM tbl_there_group
 	</insert>
 	
-	<select id="countThereGroupId" parameterType="string" resultType="int">
+	<select id="countThereGroupId" parameterType="string"
+		resultType="int">
 		SELECT COUNT(id)
-		FROM tbl_there_group
-		WHERE id = #{id}
+		  FROM tbl_there_group
+		 WHERE id = #{id}
 	</select>
 
 </mapper>

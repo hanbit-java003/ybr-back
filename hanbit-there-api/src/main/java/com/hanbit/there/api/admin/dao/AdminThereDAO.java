@@ -41,7 +41,11 @@ public class AdminThereDAO {
 	}
 	
 	public int insertThereGroup(AdminThereGroupVO groupVO) {
-		return 0;
+		return sqlSession.insert("admin.there.insertThereGroup", groupVO);
+	}
+	
+	public int countThereGroupId(String id) {
+		return sqlSession.selectOne("admin.there.countThereGroupId", id);
 	}
 	
 }

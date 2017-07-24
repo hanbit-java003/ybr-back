@@ -14,10 +14,10 @@ import com.hanbit.there.api.service.MenuService;
 public class AdminThereService {
 
 	@Autowired
-	private AdminThereDAO adminThereDAO;
+	private MenuService menuService;
 	
 	@Autowired
-	private MenuService menuService;
+	private AdminThereDAO adminThereDAO;
 	
 	public List<AdminThereGroupVO> listThereGroups() {
 		return adminThereDAO.selectThereGroups();
@@ -27,8 +27,8 @@ public class AdminThereService {
 	public void modifyThereGroupOrder(String idUp, String idDown) {
 		adminThereDAO.updateThereGroupOrder(idUp, -1);
 		adminThereDAO.updateThereGroupOrder(idDown, 1);
-		menuService.invalidateCache();
 
+		menuService.invalidateCache();
 	}
 	
 	public AdminThereGroupVO getThereGroup(String id) {
@@ -44,4 +44,13 @@ public class AdminThereService {
 		adminThereDAO.deleteThereGroup(id);
 		menuService.invalidateCache();
 	}
+	
+	public void addThereGroup(AdminThereGroupVO groupVO) {
+		adminThereDAO.insertThereGroup(groupVO);
+	}
+	
+	public boolean hasThereGroupId(String id) {
+		return adminThereDAO.countThereGroupId(id) > 0;
+	}
+	
 }
