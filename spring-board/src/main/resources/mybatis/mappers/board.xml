@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+  
+  <select id="selectDual" resultType="int">
+    SELECT 1 FROM DUAL
+  </select>
+  
+  <select id="countTotal" resultType="int">
+  	SELECT COUNT(no)
+  	  FROM tbl_board
+  </select>
+  
+  <select id="selectList" parameterType="pageVO" resultType="boardVO">
+  	SELECT b.no, title, b.writer, views, COUNT(rno) reply_count
+	  FROM (
+		SELECT no, title, writer, views
+		  FROM tbl_board
+		 ORDER BY no DESC
+		 LIMIT #{firstIndex}, #{rowsPerPage}) b LEFT JOIN tbl_reply r
+	    ON b.no = r.no
+	 GROUP BY b.no
+	 ORDER BY b.no DESC
+  </select>
+  
+  <select id="selectNextNo" resultType="int">
+  	SELECT IFNULL(MAX(no), 0) + 1
+  	  FROM tbl_board
+  </select>
+  
+  <insert id="insertArticle" parameterType="boardVO">
+  	INSERT INTO tbl_board
+  		(no, title, writer, views, contents)
+  	VALUES
+  		(#{no}, #{title}, #{writer}, 0, #{contents})
+  </insert>
+  
+  <select id="selectArticle" parameterType="int" resultType="boardVO">
+	SELECT no, title, writer, views, contents
+	  FROM tbl_board
+	 WHERE no = #{no}
+  </select>
+  
+  <update id="updateViews" parameterType="int">
+  	UPDATE tbl_board
+  	   SET views = views + 1
+  	 WHERE no = #{no}
+  </update>
+  
+  <update id="updateArticle" parameterType="boardVO">
+	UPDATE tbl_board
+	   SET title = #{title},
+	   	   writer = #{writer},
+	   	   contents = #{contents}
+	 WHERE no = #{no}  
+  </update>
+  
+  <delete id="deleteArticle" parameterType="int">
+  	DELETE
+  	  FROM tbl_board
+  	 WHERE no = #{no}
+  </delete>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

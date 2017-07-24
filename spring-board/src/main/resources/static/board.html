@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>스프링 게시판</title>
+	<link rel="stylesheet" href="//unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/board.css">
+</head>
+<body>
+<div class="board-container">
+	<!-- 목록 -->
+	<div class="board-list board-section">
+		<table id="board-list" class="table">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<div class="paging-box">
+			<ul class="pagination">
+			</ul>
+		</div>
+		<div class="board-buttons">
+			<button class="board-link btn btn-primary" link="edit">글쓰기</button>
+		</div>
+	</div>
+	<!-- 글쓰기 -->
+	<div class="board-edit board-section">
+		<div class="form-group">
+			<label>제목</label>
+			<input id="edit-title" type="text" class="form-control" placeholder="제목">
+		</div>
+		<div class="form-group">
+			<label>작성자</label>
+			<input id="edit-writer" type="text" class="form-control" placeholder="작성자">
+		</div>
+		<div class="form-group">
+			<label>내용</label>
+			<textarea id="edit-contents" class="board-textarea form-control" placeholder="내용을 입력하세요."></textarea>
+		</div>
+		<div class="board-buttons">
+			<button id="board-save" class="btn btn-success">저장</button>
+			<button class="board-link btn btn-default" link="list">목록</button>
+		</div>
+	</div>
+	<!-- 상세 -->
+	<div class="board-detail board-section">
+		<div class="form-group">
+			<label>제목</label>
+			<div id="detail-title" class="board-text">안녕하세요</div>
+		</div>
+		<div class="form-group">
+			<label>작성자</label>
+			<div id="detail-writer" class="board-text">글쓴이</div>
+		</div>
+		<div class="form-group">
+			<label>내용</label>
+			<div id="detail-contents" class="board-contents">Hello</div>
+		</div>
+		<div class="board-buttons">
+			<button id="board-edit" class="btn btn-warning">수정</button>
+			<button id="board-delete" class="btn btn-danger">삭제</button>
+			<button class="board-link btn btn-default" link="list">목록</button>
+		</div>
+		<div class="reply-box">
+			<input type="text" id="reply-writer" class="form-control" placeholder="댓글 작성자">
+			<textarea id="reply-contents" class="form-control" placeholder="댓글 내용"></textarea>
+			<button id="reply-save" class="btn btn-primary">댓글 쓰기</button>
+		</div>
+		<ul class="replies">
+		</ul>
+	</div>
+</div>
+
+<script src="//unpkg.com/jquery@3.2.1"></script>
+<script src="//unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="./js/board.js"></script>
+</body>
+</html>
