@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.there">
+
+	<select id="selectThereGroups" resultType="adminThereGroupVO">
+		SELECT g.id, g.name, g.update_dt, COUNT(t.group_id) there_count
+		  FROM tbl_there_group g LEFT JOIN tbl_there t
+		 ON g.id = t.group_id
+		 GROUP BY t.group_id
+		 ORDER BY group_order
+	</select>
+	
+	<update id="updateThereGroupOrder" parameterType="map">
+		UPDATE tbl_there_group
+		SET group_order = group_order + (${order}),
+			update_dt = NOW()
+		WHERE id = #{id}
+	</update>
+	
+	<select id="selectThereGroup" parameterType="string" resultType="adminThereGroupVO">
+	SELECT id, name
+	FROM tbl_there_group
+	WHERE id = #{id}
+	</select>
+	
+	<update id="updateThereGroup" parameterType="adminThereGroup">
+		UPDATE tbl_there_group
+			SET name = #{name},
+			update_dt = NOW()
+			WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteThereGroup" parameterType="string">
+		DELETE
+		  FROM tbl_there_group
+		 WHERE id = #{id}
+	</delete>
+	
+	<insert id="insertThereGroup" parameterType="adminThereGroupVO">
+		INSERT INTO tbl_there_group
+				(id, name, group_order, update_dt)
+			VALUES
+				(#{id}, #{name}, (
+				SELECT MAX(group_order) + 1
+				FROM tbl_there_group
+				), NOW())
+	</insert>
+	
+	<select id="countThereGroupId" parameterType="string" resultType="int">
+		SELECT COUNT(id)
+		FROM tbl_there_group
+		WHERE id = #{id}
+	</select>
+
+</mapper>
