@@ -9,25 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hanbit.there.api.admin.vo.AdminThereGroupVO;
+import com.hanbit.there.api.admin.vo.AdminThereVO;
 
 @Repository
 public class AdminThereDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	public List<AdminThereGroupVO> selectThereGroups() {
 		return sqlSession.selectList("admin.there.selectThereGroups");
 	}
-	
+
 	public int updateThereGroupOrder(String id, int order) {
 		Map param = new HashMap();
 		param.put("id", id);
 		param.put("order", order);
-		
+
 		return sqlSession.update("admin.there.updateThereGroupOrder", param);
 	}
-	
+
 	public AdminThereGroupVO selectThereGroup(String id) {
 		return sqlSession.selectOne("admin.there.selectThereGroup", id);
 	}
@@ -35,17 +36,25 @@ public class AdminThereDAO {
 	public int updateThereGroup(AdminThereGroupVO groupVO) {
 		return sqlSession.update("admin.there.updateThereGroup", groupVO);
 	}
-	
+
 	public int deleteThereGroup(String id) {
 		return sqlSession.delete("admin.there.deleteThereGroup", id);
 	}
-	
+
 	public int insertThereGroup(AdminThereGroupVO groupVO) {
 		return sqlSession.insert("admin.there.insertThereGroup", groupVO);
 	}
-	
+
 	public int countThereGroupId(String id) {
 		return sqlSession.selectOne("admin.there.countThereGroupId", id);
 	}
-	
+
+	public List<AdminThereVO> selectTheres(String groupId) {
+		return sqlSession.selectList("admin.there.selectTheres", groupId);
+	}
+
+	public int countThereId(String id) {
+		return sqlSession.selectOne("admin.there.countThereId", id);
+	}
+
 }

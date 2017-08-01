@@ -11,45 +11,66 @@
 		 GROUP BY t.group_id
 		 ORDER BY group_order
 	</select>
-	
+
 	<update id="updateThereGroupOrder" parameterType="map">
 		UPDATE tbl_there_group
 		   SET group_order = group_order + (${order}),
 		   	   update_dt = NOW()
 		 WHERE id = #{id}
 	</update>
-	
+
 	<select id="selectThereGroup" parameterType="string"
 		resultType="adminThereGroupVO">
 		SELECT id, name
 		  FROM tbl_there_group
 		 WHERE id = #{id}
 	</select>
-	
+
 	<update id="updateThereGroup" parameterType="adminThereGroupVO">
 		UPDATE tbl_there_group
 		   SET name = #{name},
 		   	   update_dt = NOW()
-		 WHERE id = #{id}	
+		 WHERE id = #{id}
 	</update>
-	
+
 	<delete id="deleteThereGroup" parameterType="string">
 		DELETE
 		  FROM tbl_there_group
 		 WHERE id = #{id}
 	</delete>
-	
+
 	<insert id="insertThereGroup" parameterType="adminThereGroupVO">
 		INSERT INTO tbl_there_group
 			(id, name, group_order, update_dt)
 		SELECT #{id}, #{name}, MAX(group_order) + 1, NOW()
 		  FROM tbl_there_group
 	</insert>
-	
+
 	<select id="countThereGroupId" parameterType="string"
 		resultType="int">
 		SELECT COUNT(id)
 		  FROM tbl_there_group
+		 WHERE id = #{id}
+	</select>
+
+	<select id="selectTheres" parameterType="string"
+		resultType="adminThereVO">
+		SELECT t.id, group_id, name, summary, background,
+			   COUNT(distinct i.info_id) info_count,
+		       COUNT(distinct tr.traffic_id) traffic_count
+		  FROM tbl_there t
+		  LEFT JOIN tbl_info i
+		    ON t.id = i.id
+		  LEFT JOIN tbl_traffic tr
+		    ON t.id = tr.id
+		 WHERE group_id = #{groupId}
+		 GROUP BY t.id
+		 ORDER BY name
+	</select>
+
+	<select id="countThereId" parameterType="string" resultType="int">
+		SELECT COUNT(id)
+		  FROM tbl_there
 		 WHERE id = #{id}
 	</select>
 

@@ -15,6 +15,7 @@
   	<typeAlias alias="trafficVO" type="com.hanbit.there.api.vo.TrafficVO"/>
   	
   	<typeAlias alias="adminThereGroupVO" type="com.hanbit.there.api.admin.vo.AdminThereGroupVO"/>
+  	<typeAlias alias="adminThereVO" type="com.hanbit.there.api.admin.vo.AdminThereVO"/>
   </typeAliases>
   
 </configuration>
