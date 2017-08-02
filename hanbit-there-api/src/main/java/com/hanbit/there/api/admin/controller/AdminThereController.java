@@ -1,5 +1,7 @@
 package com.hanbit.there.api.admin.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -123,6 +126,29 @@ public class AdminThereController {
 
 		String json = request.getParameter("json");
 		ThereVO there = mapper.readValue(json, ThereVO.class);
+		
+		MultipartFile background = request.getFile("background");
+		
+		if(background != null) {
+			System.out.println(background.getContentType());
+			System.out.println(background.getOriginalFilename());
+			System.out.println(background.getSize());
+			
+			InputStream inputStream = background.getInputStream();
+			
+			background.getInputStream();
+			String filePath = "/hanbit" + there.getId();
+			FileOutputStream outputStream = new FileOutputStream(filePath);
+			
+			byte[] buffer = new byte[4096];
+			
+			while (inputStream.available() > 0) {
+				int readLength = inputStream.read(buffer, 0, Math.min(buffer.length, inputStream.available()));
+				
+				outputStream.write(buffer, 0, readLength);
+			}
+			outputStream.close();
+		}
 
 		Map result = new HashMap();
 		result.put("ok", true);
