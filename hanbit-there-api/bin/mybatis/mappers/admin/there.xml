@@ -74,4 +74,70 @@
 		 WHERE id = #{id}
 	</select>
 
+	<update id="updateThere" parameterType="thereVO">
+		UPDATE tbl_there
+		   SET name = #{name},
+		       name_en = #{nameEn},
+		       background = #{background},
+		       timezone = #{timezone},
+		       summary = #{summary}
+		 WHERE id = #{id}
+	</update>
+
+	<update id="replaceLocation" parameterType="thereVO">
+		REPLACE INTO tbl_location
+			(id, lat, lng)
+		VALUES
+			(#{id}, #{location.lat}, #{location.lng})
+	</update>
+
+	<delete id="deleteInfos" parameterType="string">
+		DELETE
+		  FROM tbl_info
+		 WHERE id = #{id}
+	</delete>
+
+	<insert id="insertInfos" parameterType="thereVO">
+		INSERT INTO tbl_info
+			(id, info_id, title, value, info_order)
+		VALUES
+		<foreach collection="areaInfo" item="info" index="index" separator=",">
+			(#{id}, #{index} + 1, #{info.title}, #{info.value}, #{index} + 1)
+		</foreach>
+	</insert>
+
+	<delete id="deleteTraffics" parameterType="string">
+		DELETE
+		  FROM tbl_traffic
+		 WHERE id = #{id}
+	</delete>
+
+	<insert id="insertTraffics" parameterType="thereVO">
+		INSERT INTO tbl_traffic
+			(id, traffic_id, icon, title, contents, traffic_order)
+		VALUES
+		<foreach collection="traffics" item="traffic" index="index" separator=",">
+			(#{id}, #{index} + 1, #{traffic.icon}, #{traffic.title}, #{traffic.contents}, #{index} + 1)
+		</foreach>
+	</insert>
+
+	<insert id="insertThere" parameterType="thereVO">
+		INSERT INTO tbl_there
+			(id, group_id, name, name_en, timezone, background, summary)
+		VALUES
+			(#{id}, #{groupId}, #{name}, #{nameEn}, #{timezone}, #{background}, #{summary})
+	</insert>
+
+	<delete id="deleteThere" parameterType="string">
+		DELETE
+		  FROM tbl_there
+		 WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteLocation" parameterType="string">
+		DELETE
+		  FROM tbl_location
+		 WHERE id = #{id}
+	</delete>
+
 </mapper>

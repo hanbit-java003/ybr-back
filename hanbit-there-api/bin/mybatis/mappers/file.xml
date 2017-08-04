@@ -24,4 +24,10 @@
 			(#{fileId}, #{filePath}, #{contentType}, #{contentLength}, #{fileName})
 	</insert>
 
+	<delete id="deleteFile" parameterType="string">
+		DELETE
+		  FROM tbl_file
+		 WHERE file_id = #{fileId}
+	</delete>
+
 </mapper>

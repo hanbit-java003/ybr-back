@@ -1,8 +1,10 @@
 package com.hanbit.there.api.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,15 @@ public class FileService {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void removeFile(String fileId) {
+		FileVO fileVO = fileDAO.selectFile(fileId);
+		String filePath = fileVO.getFilePath();
+
+		fileDAO.deleteFile(fileId);
+
+		FileUtils.deleteQuietly(new File(filePath));
 	}
 
 }

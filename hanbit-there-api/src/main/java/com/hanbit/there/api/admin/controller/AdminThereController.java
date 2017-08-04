@@ -133,22 +133,31 @@ public class AdminThereController {
 
 		MultipartFile background = request.getFile("background");
 
-		if (background != null) {
-			FileVO fileVO = new FileVO();
-			fileVO.setFileId("there-" + there.getId());
+		adminThereService.modifyThere(there, background);
 
-			String fileExt = FilenameUtils.getExtension(background.getOriginalFilename());
-			String fileName = there.getId() + "." + fileExt;
+		Map result = new HashMap();
+		result.put("ok", true);
 
-			fileVO.setFilePath("/hanbit/webpack/hanbit-there/src/img/theres/" + fileName);
-			fileVO.setFileName(fileName);
-			fileVO.setContentType(background.getContentType());
-			fileVO.setContentLength(background.getSize());
+		return result;
+	}
 
-			fileService.modifyFile(fileVO, background.getInputStream());
+	@PostMapping("/add")
+	public Map addThere(@RequestParam("json") String json,
+			@RequestParam("background") MultipartFile background) throws Exception {
 
-			there.setBackground("/api/file/" + fileVO.getFileId());
-		}
+		ThereVO thereVO = mapper.readValue(json, ThereVO.class);
+
+		adminThereService.addThere(thereVO, background);
+
+		Map result = new HashMap();
+		result.put("ok", true);
+
+		return result;
+	}
+
+	@DeleteMapping("/{id}")
+	public Map removeThere(@PathVariable("id") String id) {
+		adminThereService.removeThere(id);
 
 		Map result = new HashMap();
 		result.put("ok", true);
