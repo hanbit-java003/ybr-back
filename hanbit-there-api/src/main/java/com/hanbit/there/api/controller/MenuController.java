@@ -13,10 +13,10 @@ public class MenuController {
 
 	@Autowired
 	private MenuService menuService;
-	
+
 	@RequestMapping(value="/json", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String getMenu() {
 		return menuService.getMenu();
 	}
-	
+
 }

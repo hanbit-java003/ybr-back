@@ -1,11 +1,11 @@
 package com.hanbit.there.api.vo;
 
 public class ActivityListItemVO {
-	
+
 	private String title;
 	private String icon;
 	private String text;
-	
+
 	public String getTitle() {
 		return title;
 	}

@@ -3,12 +3,11 @@ package com.hanbit.there.api.vo;
 import java.util.List;
 
 public class ActivityListVO {
-	
+
 	private String title;
 	private String type;
 	private List<ActivityListItemVO> items;
-	
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -27,4 +26,5 @@ public class ActivityListVO {
 	public void setItems(List<ActivityListItemVO> items) {
 		this.items = items;
 	}
+
 }

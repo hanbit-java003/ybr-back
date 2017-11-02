@@ -1,7 +1,7 @@
 package com.hanbit.there.api.vo;
 
 public class SubMenuVO {
-	
+
 	private String id;
 	private String name;
 	
@@ -18,6 +18,4 @@ public class SubMenuVO {
 		this.name = name;
 	}
 	
-	
-
 }

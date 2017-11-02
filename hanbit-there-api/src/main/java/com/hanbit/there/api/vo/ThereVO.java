@@ -11,11 +11,11 @@ public class ThereVO {
 	private String background;
 	private String summary;
 	private String timezone;
-	
+
 	private List<InfoVO> areaInfo;
 	private LocationVO location;
 	private List<TrafficVO> traffics;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -76,5 +76,5 @@ public class ThereVO {
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	
+
 }
